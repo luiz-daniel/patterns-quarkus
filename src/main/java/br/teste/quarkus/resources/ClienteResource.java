@@ -44,9 +44,7 @@ public class ClienteResource {
 
   @POST
   public Response gravarCliente(ClienteDto dto, @Context UriInfo uriInfo) {
-
     Long idCliente = clienteService.gravarCliente(dto);
-
     return Response.created(getLocation(uriInfo,idCliente)).build();
   }
 

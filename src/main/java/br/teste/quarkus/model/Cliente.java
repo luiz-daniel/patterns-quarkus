@@ -2,12 +2,32 @@ package br.teste.quarkus.model;
 
 import br.teste.quarkus.dto.ClienteDto;
 import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "cliente")
 public class Cliente {
 
+  @Id
+  @GeneratedValue(strategy =GenerationType.IDENTITY)
+  @Column(name = "id_cliente")
   private Long idCliente;
+
+  @Column(name = "nome")
   private String nome;
+
+  @Column(name = "abertura")
   private LocalDate abertura;
+
+  @ManyToOne
+  @JoinColumn(name = "id_endereco")
   private Endereco endereco;
 
   public Cliente() {
@@ -18,7 +38,7 @@ public class Cliente {
     this.nome = dto.getNome();
     this.abertura = dto.getAbertura();
 
-    if(dto.getEndereco() != null){
+    if (dto.getEndereco() != null) {
       this.endereco = new Endereco(dto.getEndereco());
     }
 
@@ -57,13 +77,13 @@ public class Cliente {
     this.endereco = endereco;
   }
 
-  public ClienteDto toDto(){
+  public ClienteDto toDto() {
 
     ClienteDto dto = new ClienteDto();
     dto.setIdCliente(this.getIdCliente());
     dto.setAbertura(this.getAbertura());
     dto.setNome(this.getNome());
-    if(this.endereco != null) {
+    if (this.endereco != null) {
       dto.setEndereco(this.endereco.toDto());
     }
 

@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 @Dependent
 public class ClienteService {
@@ -28,8 +29,8 @@ public class ClienteService {
 
   }
 
+  @Transactional
   public Long gravarCliente(ClienteDto dto) {
-
     return clienteRepository.cadastrar(new Cliente(dto));
   }
 
@@ -38,6 +39,7 @@ public class ClienteService {
         .map(Cliente::toDto);
   }
 
+  @Transactional
   public void deletarCliente(Long idCliente) {
 
     clienteRepository.deletarCliente(idCliente);
